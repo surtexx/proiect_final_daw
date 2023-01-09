@@ -7,6 +7,9 @@
 <body>
 <?php
 	session_start();
+	if($_SESSION['grad'] != 'admin'){
+        	header('Location:index.php');
+    }
 ?>
 	<nav>
         <a class="nav_item" href="index.php">Acasă</a>
