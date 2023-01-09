@@ -19,7 +19,7 @@
                 $mail->SMTPSecure = 'ssl';
                 $mail->Port = 465;
                 $mail->setFrom($_POST['email'], $_SESSION['name']);
-                $mail->addAddress('proiect_daw@yahoo.com', 'Gheorghe Robert');
+                $mail->addAddress($username, 'Gheorghe Robert');
                 $mail->Subject = 'Mail de la ' . $_SESSION['name'];
                 $mail->AltBody = "View in HTML";
                 $mail->MsgHTML($message);
