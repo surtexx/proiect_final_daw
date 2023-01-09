@@ -3,9 +3,9 @@ class Captcha {
   private $length = 8; // number of characters
   private $capW = 300; // captcha width
   private $capH = 100; // captcha height
-  private $capF = __DIR__ . DIRECTORY_SEPARATOR . "Tuffy-Regular.ttf"; // captcha font
+  private $capF = "./Tuffy-Regular.ttf"; // captcha font
   private $capFS = 24; // captcha font size
-  private $capB = __DIR__ . DIRECTORY_SEPARATOR . "captcha_background.jpeg"; // captcha background
+  private $capB = "./captcha_background.jpeg"; // captcha background
  
   // (B) AUTO START SESSION
   function __construct () {
