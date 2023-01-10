@@ -86,8 +86,12 @@
 							}
 							echo '</td>';
 						}
-						else
-							echo '<td>' . $td->nodeValue . '</td>';
+						else{
+							if(strpos($td->nodeValue,'*') !== false)
+								echo '<td>' . substr($td->nodeValue,0, strlen($td->nodeValue)-1) . '</td>';
+							else
+								echo '<td>' . $td->nodeValue . '</td>';
+						}
 					}
 				echo '</tr>';
 			}
