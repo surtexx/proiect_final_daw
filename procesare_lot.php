@@ -7,6 +7,9 @@
 <body>
     <?php
         session_start();
+        if(!isset($_POST['echipe'])){
+            header('Location:index.php');
+        }
     ?>
     <nav>
         <a class="nav_item" href="index.php">Acasă</a>
@@ -55,6 +58,7 @@
         $_SESSION['names'] = $names;
         $_SESSION['numbers'] = $numbers;
         $_SESSION['positions'] = $positions;
+        $_SESSION['echipa'] = $echipaAleasa;
         echo '<div>Portari:<br>';
         for($i=0;$i<count($names);$i++)
             if($positions[$i] == "Portar")
