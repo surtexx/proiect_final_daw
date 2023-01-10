@@ -7,6 +7,9 @@
 <body>
     <?php
         session_start();
+        if(!isset($_SESSION['name'])){
+            header('Location:index.php');
+        }
     ?>
     <nav>
         <a class="nav_item" href="index.php">Acasă</a>
@@ -24,26 +27,45 @@
     </nav>
     <br>
     <main>
+        <?php
+        $url = file_get_contents('https://lpf.ro/liga-1');
+        $dom = new \DOMDocument();
+        @$dom->loadHTML($url);
+        $tables = $dom->getELementsByTagName('table');
+        $clasament_table = $dom->createElement('table');
+        foreach($tables as $t_table){
+            if ($t_table->hasAttribute('class') && $t_table->getAttribute('class') == 'clasament_general white-shadow') {
+                $clasament_table = $t_table;
+                break;
+            }
+        }
+        $tds = $clasament_table->getElementsByTagName('td');
+        $trs = $clasament_table->getElementsByTagName('tr');
+        $n_places = 0;
+        $echipe = array();
+        $link_echipe = array();
+        foreach ($tds as $td) {
+            if ($td->hasAttribute('class') && $td->getAttribute('class') == 'echipa'){
+                $n_places += 1;
+                $echipa = $td->getElementsByTagName('a')->item(0)->nodeValue;
+                if(strpos($echipa,'*') !== false)
+                    $echipe[] = substr($echipa,0, strlen($echipa)-1);
+                else
+                    $echipe[] = $echipa;
+                $splitted_href = explode('/', $td->getElementsByTagName('a')->item(0)->getAttribute('href'));
+                $link_echipe[] = $splitted_href[1] . '/' . $splitted_href[2];
+            }
+        }
+        ?>
         <form action="procesare_lot.php" method="post">
             <label for="echipe">Alegeți o echipă pentru a-i vedea lotul:</label><br><br>
             <select name="echipe" id="echipe" onchange="this.form.submit()">
                 <option value="-">-</option>
-                <option value="fc-petrolul/32">FC Petrolul Ploiești</option>
-                <option value="fc-arges/27">FC Argeș</option>
-                <option value="universitatea-craiova/9">Universitatea Craiova</option>
-                <option value="fcsb/3">FCSB</option>
-                <option value="fc-cfr-1907-cluj/5">CFR Cluj</option>
-                <option value="fc-farul-constanta/12">FC Farul Constanța</option>
-                <option value="afc-hermannstadt/19">AFC Hermannstadt</option>
-                <option value="fc-botosani/8">FC Botoșani</option>
-                <option value="afc-chindia-targoviste/20">AFC Chindia Târgoviște</option>
-                <option value="cs-mioveni/28">CS Mioveni</option>
-                <option value="fcu-1948-craiova/29">FCU 1948 Craiova</option>
-                <option value="fc-rapid-1923/30">FC Rapid București</option>
-                <option value="fc-universitatea-cluj/33">Universitatea Cluj</option>
-                <option value="sepsi-osk/16">Sepsi OSK</option>
-                <option value="uta-arad/22">UTA Arad</option>
-                <option value="fc-voluntari/6">FC Voluntari</option>
+                <?php
+                    for($i=0;$i<$n_places;$i++){
+                        echo "<option value=$link_echipe[$i]>$echipe[$i]</option>";
+                    }
+                ?>
             </select>
         </form>
     </main>
