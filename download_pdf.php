@@ -18,7 +18,7 @@ if(isset($_POST['download_pdf'])){
     unset($_SESSION['numbers']);
     unset($_SESSION['names']);
     unset($_SESSION['positions']);
-    unset($_SESSION['echipa']);
+    unset($_SESSION['echipaAleasa']);
     $url = file_get_contents('https://lpf.ro/cluburi/' . $echipaAleasa);
     $doc = new \DOMDocument();
     @$doc->loadHTML($url);
