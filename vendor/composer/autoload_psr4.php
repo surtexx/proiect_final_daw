@@ -6,4 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'ColorThief\\' => array($vendorDir . '/ksubileau/color-thief-php/src/ColorThief'),
 );

@@ -23,12 +23,14 @@ if (isset($_POST['login_user']) && isset($_POST['login_password'])) {
         mysqli_stmt_store_result($stmt);
         $num_rows = mysqli_stmt_num_rows($stmt); 
         if ($num_rows === 1) {
-            mysqli_stmt_bind_result($stmt, $name, $pass, $grad);
+            mysqli_stmt_bind_result($stmt, $name, $pass, $grad, $echipa);
             mysqli_stmt_fetch($stmt);
-            $result = $grad;
+            $result_grad = $grad;
+            $result_echipa = $echipa;
             session_start();
             $_SESSION['name'] = $user;
-            $_SESSION['grad'] = $result;
+            $_SESSION['grad'] = $result_grad;
+            $_SESSION['echipa'] = $result_echipa;
             header("Location: index.php");
             exit();
         }

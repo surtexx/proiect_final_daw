@@ -6,7 +6,7 @@ class Captcha {
   private $capF = "./Tuffy-Regular.ttf"; // captcha font
   private $capFS = 24; // captcha font size
   private $capB = "./captcha_background.jpeg"; // captcha background
- 
+
   // (B) AUTO START SESSION
   function __construct () {
     if (session_status()==PHP_SESSION_DISABLED) { exit("Sessions disabled"); }
@@ -64,3 +64,5 @@ class Captcha {
 }
 
 $PHPCAP = new Captcha();
+
+?>

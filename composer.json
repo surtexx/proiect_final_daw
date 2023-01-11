@@ -1,5 +1,6 @@
 {
     "require": {
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "ksubileau/color-thief-php": "^2.0"
     }
 }

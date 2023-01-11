@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Login</title>
-		<link rel="stylesheet" href="loginstyle.css">
-	</head>
-
-	<body>
-	<nav>
-	<a class="nav_item" href="index.php">Acasă</a>
+<head>
+    <title>Profil</title>
+    <link rel="stylesheet" href="profilestyle.css">
+</head>
+<body>
+    <?php
+        session_start();
+        if(!isset($_SESSION['name'])){
+            header('Location:index.php');
+        }
+    ?>
+    <nav>
+        <a class="nav_item" href="index.php">Acasă</a>
 		<?php if(!isset($_SESSION['name'])){ ?>
 		<a class="nav_item" href="loginpage.php">Contact</a>
 		<a class="nav_item" href="loginpage.php">Loturi</a>
@@ -21,10 +26,10 @@
 		<?php if($_SESSION['grad'] == 'admin') { ?>
 		<a class="nav_item" href="admpanel.php">Admin Panel</a>
 		<?php }} ?>
-	</nav>
-        <br>
-        <main>
-			<?php
+    </nav>
+    <br>
+    <main>
+        <?php
 			$url = file_get_contents('https://lpf.ro/liga-1');
 			$dom = new \DOMDocument();
 			@$dom->loadHTML($url);
@@ -54,37 +59,11 @@
 				}
 			}
 			?>
-			<form action="login.php" method="post">
-				<h2>Login to your account</h2>
-				<?php if (isset($_GET['errorlogin'])) { ?>
-				<h3><?php echo $_GET['errorlogin']; ?></h3>
-				<?php } ?>
-				<input type="text" name="login_user" placeholder="User"><br><br>
-				<input type="password" name="login_password" placeholder="Password"><br><br>
-				<button type="submit">Login</button>
-
-			</form>
-			
-			<form action = "create_account.php" method="post">
-				<h2>Create account</h2>
-				<?php if (isset($_GET['errorcreate'])) { ?>
-				<h3><?php echo $_GET['errorcreate']; ?></h3>
-				<?php } ?>
-				<input type="text" name="create_user" placeholder="User" required><br><br>
-				<input type="password" name="create_password" placeholder="Password" required><br><br>
-				<input type="password" name="copy_password" placeholder="Same password" required><br><br>
-				<label for="captcha">Introduceti codul din imagine:</label><br>
-				<?php
-					require "captcha.php";
-					$PHPCAP->prime();
-					$PHPCAP->draw();
-				?>
-				<?php if (isset($_GET['errorcaptcha'])) { ?>
-					<h3><?php echo $_GET['errorcaptcha']; ?></h3>
-				<?php } ?>
-				<br>
-				<input type="text" name="captcha" required><br><br>
-				<label for="echipe">Alege-ți o echipă preferată:</label><br><br>
+        <?php if (isset($_GET['errorechipa'])) { ?>
+            <h3><?php echo $_GET['errorechipa']; ?></h3>
+        <?php } ?>
+        <form action="schimba_echipa.php" method="post">
+            <label for="echipe">Alegeți noua echipă preferată:</label>
 				<select name="echipe" id="echipe">
 					<option value="-">-</option>
 					<?php
@@ -93,9 +72,21 @@
 						}
 					?>
 				</select>
-				<br><br>
-				<button type="submit">Create</button>
-			</form>
-        </main>
-	</body>
+            <input type="submit" value="Submit">
+        </form>
+        <?php if (isset($_GET['errorparola'])) { ?>
+            <h3><?php echo $_GET['errorparola']; ?></h3>
+        <?php } ?>
+        <form action="schimba_parola.php" method="post">
+            <label for="new_password">Schimbă-ți parola</label><br>
+            <input type ="password" name="old_password" placeholder="Parola veche">
+            <input type="password" name="new_password" placeholder="Parola nouă">
+            <input type="password" name="confirm_new_password" placeholder="Confirmă parola nouă">
+            <input type="submit" value="Submit">
+        </form>
+        <form action="logout.php" method="post">
+            <input type="submit" value="Deconectează-te">
+        </form>
+    </main>
+</body>
 </html>

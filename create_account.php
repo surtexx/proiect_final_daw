@@ -11,6 +11,7 @@ if (isset($_POST['create_user']) && isset($_POST['create_password']) && isset($_
     $user = validate($_POST['create_user']);
     $pass = validate($_POST['create_password']);
     $copypass = validate($_POST['copy_password']);
+    $echipa = validate($_POST['echipe']);
     $grade = 'user';
     if (empty($user)) {
         header("Location: loginpage.php?errorcreatecreate=Username-ul nu poate fi gol.");
@@ -24,6 +25,9 @@ if (isset($_POST['create_user']) && isset($_POST['create_password']) && isset($_
         header("Location: loginpage.php?errorcreate=Parolele trebuie să coincidă.");
         exit();
     }
+    else if($echipa == '-'){
+        header("Location: loginpage.php?errorcreate=Trebuie să vă alegeți echipa favorită.");
+    }
     else if (!$PHPCAP->verify($_POST["captcha"])){
         header("Location:loginpage.php?errorcreate=Captcha incorect.");
         exit();
@@ -36,9 +40,9 @@ if (isset($_POST['create_user']) && isset($_POST['create_password']) && isset($_
         mysqli_stmt_store_result($stmt);
         $num_rows = mysqli_stmt_num_rows($stmt);        
         if ($num_rows === 0) {
-            $query = "INSERT INTO credentials VALUES (?, ?, ?)";
+            $query = "INSERT INTO credentials VALUES (?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $query);
-            mysqli_stmt_bind_param($stmt, "sss", $user, hash('sha256',$pass), $grade);
+            mysqli_stmt_bind_param($stmt, "ssss", $user, hash('sha256',$pass), $grade, $echipa);
             mysqli_stmt_execute($stmt);
             if(mysqli_affected_rows($conn) > 0) {
                 header("Location:index.php?success=Contul a fost creat cu succes!");
@@ -55,4 +59,6 @@ if (isset($_POST['create_user']) && isset($_POST['create_password']) && isset($_
         }
     }
 }
+else
+    header("Location:index.php");
 ?>

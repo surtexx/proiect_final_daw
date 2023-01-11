@@ -6,6 +6,20 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit0269be6906243605c1befa05cfdf99e0
 {
+    public static $prefixLengthsPsr4 = array (
+        'C' => 
+        array (
+            'ColorThief\\' => 11,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'ColorThief\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ksubileau/color-thief-php/src/ColorThief',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -13,6 +27,8 @@ class ComposerStaticInit0269be6906243605c1befa05cfdf99e0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0269be6906243605c1befa05cfdf99e0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0269be6906243605c1befa05cfdf99e0::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit0269be6906243605c1befa05cfdf99e0::$classMap;
 
         }, null, ClassLoader::class);
