@@ -23,26 +23,35 @@
         <br>
         <main>
                 <form action="login.php" method="post">
-					<h2>Login to your account</h2>
-					<?php if (isset($_GET['errorlogin'])) { ?>
-					<h3><?php echo $_GET['errorlogin']; ?></h3>
-					<?php } ?>
-					<input type="text" name="login_user" placeholder="User"><br><br>
-					<input type="password" name="login_password" placeholder="Password"><br><br>
-					<button type="submit">Login</button>
-
+			<h2>Login to your account</h2>
+			<?php if (isset($_GET['errorlogin'])) { ?>
+			<h3><?php echo $_GET['errorlogin']; ?></h3>
+			<?php } ?>
+			<input type="text" name="login_user" placeholder="User"><br><br>
+			<input type="password" name="login_password" placeholder="Password"><br><br>
+			<button type="submit">Login</button>
                 </form>
-				
-				<form action = "create_account.php" method="post">
-					<h2>Create account</h2>
-					<?php if (isset($_GET['errorcreate'])) { ?>
-					<h3><?php echo $_GET['errorcreate']; ?></h3>
-					<?php } ?>
-					<input type="text" name="create_user" placeholder="User"><br><br>
-					<input type="password" name="create_password" placeholder="Password"><br><br>
-					<input type="password" name="copy_password" placeholder="Same password"><br><br>
-					<button type="submit">Create</button>
-				</form>
+		<form action = "create_account.php" method="post">
+			<h2>Create account</h2>
+			<?php if (isset($_GET['errorcreate'])) { ?>
+			<h3><?php echo $_GET['errorcreate']; ?></h3>
+			<?php } ?>
+			<input type="text" name="create_user" placeholder="User" required><br><br>
+			<input type="password" name="create_password" placeholder="Password" required><br><br>
+			<input type="password" name="copy_password" placeholder="Same password" required><br><br>
+			<label for="captcha">Introduceti codul din imagine:</label><br>
+			<?php
+				require "captcha.php";
+				$PHPCAP->prime();
+				$PHPCAP->draw();
+			?>
+			<?php if (isset($_GET['errorcaptcha'])) { ?>
+				<h3><?php echo $_GET['errorcaptcha']; ?></h3>
+			<?php } ?>
+			<br>
+			<input type="text" name="captcha" required><br>
+			<button type="submit">Create</button>
+		</form>
         </main>
 	</body>
 </html>
