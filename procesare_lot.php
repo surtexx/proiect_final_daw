@@ -61,7 +61,7 @@
         $_SESSION['names'] = $names;
         $_SESSION['numbers'] = $numbers;
         $_SESSION['positions'] = $positions;
-        $_SESSION['echipa'] = $echipaAleasa;
+        $_SESSION['echipaAleasa'] = $echipaAleasa;
         echo '<div>Portari:<br>';
         for($i=0;$i<count($names);$i++)
             if($positions[$i] == "Portar")
