@@ -1,5 +1,6 @@
 <?php
 include "dbconn.php";
+require "captcha.php";
 if (isset($_POST['create_user']) && isset($_POST['create_password']) && isset($_POST['copy_password'])) {
     function validate($data){
        $data = trim($data);
@@ -21,6 +22,10 @@ if (isset($_POST['create_user']) && isset($_POST['create_password']) && isset($_
     }
     else if($pass != $copypass){
         header("Location: loginpage.php?errorcreate=Parolele trebuie să coincidă.");
+        exit();
+    }
+    else if (!$PHPCAP->verify($_POST["captcha"])){
+        header("Location:loginpage.php?errorcreate=Captcha incorect.");
         exit();
     }
     else{
