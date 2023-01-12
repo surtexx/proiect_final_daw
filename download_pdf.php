@@ -13,7 +13,7 @@ if(isset($_POST['download_pdf'])){
     $numbers = $_SESSION['numbers'];
     $names = $_SESSION['names'];
     $positions = $_SESSION['positions'];
-    $echipaAleasa = $_SESSION['echipa'];
+    $echipaAleasa = $_SESSION['echipaAleasa'];
 
     unset($_SESSION['numbers']);
     unset($_SESSION['names']);
